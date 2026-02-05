@@ -26,17 +26,49 @@ function renderFinchScaffold(config) {
     config.activityTitle;
 
   const container = document.getElementById("scaffold");
+  container.innerHTML = "";
 
   config.steps.forEach((step, index) => {
     const section = document.createElement("section");
-    section.className = "step";
+    section.className = "step locked";
+    section.dataset.stepIndex = index;
+
+    if (index === 0) {
+      section.classList.remove("locked");
+    }
 
     section.innerHTML = `
       <h2>Step ${index + 1}: ${step.title}</h2>
       <p>${step.prompt}</p>
+
+      <div class="instructor-note">
+        <strong>Instructor note:</strong>
+        <p>${step.instructorNote}</p>
+      </div>
+
       <textarea placeholder="Student notes..."></textarea>
+
+      <button class="completeStep">Mark Step Complete</button>
     `;
 
     container.appendChild(section);
   });
+
+  document.querySelectorAll(".completeStep").forEach(button => {
+    button.addEventListener("click", handleStepCompletion);
+  });
+}
+function handleStepCompletion(e) {
+  const currentStep = e.target.closest(".step");
+  const index = parseInt(currentStep.dataset.stepIndex, 10);
+
+  currentStep.classList.add("completed");
+
+  const nextStep = document.querySelector(
+    `.step[data-step-index="${index + 1}"]`
+  );
+
+  if (nextStep) {
+    nextStep.classList.remove("locked");
+  }
 }
