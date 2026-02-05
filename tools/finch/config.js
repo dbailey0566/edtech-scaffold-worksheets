@@ -8,6 +8,19 @@ const finchConfig = {
     "Debug movement errors"
   ],
 
+controls: {
+  up: "Move forward",
+  down: "Move backward",
+  left: "Turn left",
+  right: "Turn right",
+  instructorTips: [
+    "Left/right may feel reversed depending on motor orientation.",
+    "Turning is usually achieved by slowing one wheel, not reversing both.",
+    "Have students test movement one direction at a time."
+  ]
+},
+
+  
  steps: [
   {
     title: "Control Mapping",
