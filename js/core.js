@@ -28,6 +28,9 @@ function toggleMode() {
   }
 }
 
+/* ---------------------------
+   RC CONTROL MAP
+---------------------------- */
 function renderControlMap(controls) {
   const container = document.getElementById("scaffold");
 
@@ -62,20 +65,23 @@ function renderControlMap(controls) {
   container.appendChild(controlSection);
 }
 
+/* ---------------------------
+   MAIN SCAFFOLD RENDER
+---------------------------- */
 function renderFinchScaffold(config) {
   const container = document.getElementById("scaffold");
 
   // Clear FIRST
   container.innerHTML = "";
 
-  // Then render control map
+  // Control map first
   renderControlMap(config.controls);
 
-  // Set title
+  // Title
   document.getElementById("activity-title").textContent =
     config.activityTitle;
 
-  // Then render steps
+  // Steps
   config.steps.forEach((step, index) => {
     const section = document.createElement("section");
     section.className = "step locked";
@@ -91,10 +97,12 @@ function renderFinchScaffold(config) {
 
       <div class="instructor-note">
         <strong>Instructor note:</strong>
-        <p>${step.instructorNote}</p>
+        <p>${step.instructorNote || ""}</p>
       </div>
 
-      <textarea placeholder="Student notes..."></textarea>
+      ${step.failures ? renderDebuggingUI(step) : `
+        <textarea placeholder="Student notes..."></textarea>
+      `}
 
       <button class="completeStep">Mark Step Complete</button>
     `;
@@ -107,6 +115,51 @@ function renderFinchScaffold(config) {
   });
 }
 
+/* ---------------------------
+   DEBUGGING UI (STEP 4)
+---------------------------- */
+function renderDebuggingUI(step) {
+  return `
+    <div class="debugging">
+      <label>Select a failure scenario:</label>
+      <select class="failureSelect">
+        <option value="">-- Choose one --</option>
+        ${step.failures.map(
+          (f, i) => `<option value="${i}">${f.label}</option>`
+        ).join("")}
+      </select>
+
+      <div class="failurePrompt"></div>
+    </div>
+  `;
+}
+
+document.addEventListener("change", e => {
+  if (!e.target.classList.contains("failureSelect")) return;
+
+  const stepSection = e.target.closest(".step");
+  const stepIndex = parseInt(stepSection.dataset.stepIndex, 10);
+  const failureIndex = e.target.value;
+
+  if (failureIndex === "") return;
+
+  const failure =
+    finchConfig.steps[stepIndex].failures[failureIndex];
+
+  stepSection.querySelector(".failurePrompt").innerHTML = `
+    <p><strong>Student task:</strong> ${failure.studentPrompt}</p>
+    <textarea placeholder="Explain what happened and why..."></textarea>
+
+    <div class="instructor-note">
+      <strong>Instructor note:</strong>
+      <p>${failure.instructorNote}</p>
+    </div>
+  `;
+});
+
+/* ---------------------------
+   STEP COMPLETION
+---------------------------- */
 function handleStepCompletion(e) {
   const currentStep = e.target.closest(".step");
   const index = parseInt(currentStep.dataset.stepIndex, 10);
