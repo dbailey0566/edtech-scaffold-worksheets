@@ -28,19 +28,59 @@ function toggleMode() {
   }
 }
 
+function renderControlMap(controls) {
+  const container = document.getElementById("scaffold");
+
+  const controlSection = document.createElement("section");
+  controlSection.className = "control-map";
+
+  controlSection.innerHTML = `
+    <h2>Remote Control Mapping</h2>
+
+    <div class="controls-grid">
+      <div></div>
+      <div class="control up">↑<br><span>${controls.up}</span></div>
+      <div></div>
+
+      <div class="control left">←<br><span>${controls.left}</span></div>
+      <div class="control stop">■<br><span>Stop</span></div>
+      <div class="control right">→<br><span>${controls.right}</span></div>
+
+      <div></div>
+      <div class="control down">↓<br><span>${controls.down}</span></div>
+      <div></div>
+    </div>
+
+    <div class="instructor-note">
+      <strong>Instructor guidance:</strong>
+      <ul>
+        ${controls.instructorTips.map(tip => `<li>${tip}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+
+  container.appendChild(controlSection);
+}
+
 function renderFinchScaffold(config) {
+  const container = document.getElementById("scaffold");
+
+  // Clear FIRST
+  container.innerHTML = "";
+
+  // Then render control map
+  renderControlMap(config.controls);
+
+  // Set title
   document.getElementById("activity-title").textContent =
     config.activityTitle;
 
-  const container = document.getElementById("scaffold");
-  container.innerHTML = "";
-
+  // Then render steps
   config.steps.forEach((step, index) => {
     const section = document.createElement("section");
     section.className = "step locked";
     section.dataset.stepIndex = index;
 
-    // First step starts unlocked
     if (index === 0) {
       section.classList.remove("locked");
     }
@@ -71,11 +111,9 @@ function handleStepCompletion(e) {
   const currentStep = e.target.closest(".step");
   const index = parseInt(currentStep.dataset.stepIndex, 10);
 
-  // Mark complete and prevent double-clicking
   currentStep.classList.add("completed");
   e.target.disabled = true;
 
-  // Unlock the next step
   const nextStep = document.querySelector(
     `.step[data-step-index="${index + 1}"]`
   );
