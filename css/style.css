@@ -15,6 +15,20 @@ header {
   margin-bottom: 20px;
 }
 
+.step.locked {
+  opacity: 0.4;
+}
+
+.step.locked textarea,
+.step.locked button {
+  pointer-events: none;
+}
+
+.step.completed {
+  border-color: green;
+  background-color: #e6ffe6;
+}
+
 textarea {
   width: 100%;
   min-height: 80px;
@@ -23,25 +37,19 @@ textarea {
 .instructor .step {
   background-color: #f5f5f5;
 }
-.step.locked {
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.step.completed {
-  border-color: green;
-}
 
 .instructor-note {
   display: none;
   background: #fff3cd;
   padding: 10px;
   margin: 10px 0;
+  border-left: 5px solid #856404;
 }
 
 .instructor .instructor-note {
   display: block;
 }
+
 .control-map {
   margin-bottom: 30px;
 }
@@ -59,6 +67,8 @@ textarea {
   border: 2px solid #333;
   padding: 10px;
   font-size: 24px;
+  border-radius: 6px;
+  background: #fafafa;
 }
 
 .control span {
@@ -70,4 +80,3 @@ textarea {
 .control.stop {
   background: #eee;
 }
-
