@@ -32,10 +32,27 @@ const finchConfig = {
       instructorNote: "Watch for duplicated code instead of reusable functions."
     },
     {
-      title: "Input Handling",
-      prompt: "Connect phone or keyboard input to movement functions.",
-      instructorNote: "This is where students often mix up key events."
-    },
+  title: "Build the Control Logic (Code Practice)",
+  prompt: "Use Scratch-style blocks to design the logic that makes the Finch move forward when the Up arrow is pressed.",
+  
+  codePractice: {
+    event: "when Up arrow pressed",
+
+    blocks: [
+      "set left motor speed",
+      "set right motor speed",
+      "wait",
+      "stop motors"
+    ],
+
+    explanationPrompt:
+      "Why does the order of these blocks matter for correct movement?"
+  },
+
+  instructorNote:
+    "Expected logic: event → set both motors forward → optional wait → stop. Watch for students reversing motors instead of adjusting speed."
+},
+
     {
       title: "Debugging",
       prompt: "Choose one failure scenario. Predict what will happen, observe the behavior, and explain why it occurred.",
