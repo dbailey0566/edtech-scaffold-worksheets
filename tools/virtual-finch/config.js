@@ -67,3 +67,5 @@ const virtualFinchConfig = {
     }
   ]
 };
+
+window.virtualFinchConfig = virtualFinchConfig;
