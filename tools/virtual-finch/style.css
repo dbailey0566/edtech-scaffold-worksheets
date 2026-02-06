@@ -127,3 +127,51 @@ ul {
   font-size: 14px;
   color: #4b5563;
 }
+/* =========================
+   Simulator Header
+   ========================= */
+
+.sim-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.home-link {
+  text-decoration: none;
+  font-weight: 600;
+  color: #2563eb;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.home-link:hover {
+  background: #e0e7ff;
+}
+
+.title-wrap {
+  flex: 1;
+}
+
+.title-wrap h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.title-wrap p {
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.level-pill {
+  background: #e0e7ff;
+  color: #1e40af;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
