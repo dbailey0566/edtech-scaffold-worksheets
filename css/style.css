@@ -80,3 +80,17 @@ textarea {
 .control.stop {
   background: #eee;
 }
+.code-practice {
+  margin-top: 15px;
+}
+
+.code-practice label {
+  display: block;
+  margin-top: 10px;
+}
+
+.code-practice select {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+}
