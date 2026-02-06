@@ -9,6 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (toggleBtn) {
     toggleBtn.addEventListener("click", toggleMode);
   }
+  const printBtn = document.getElementById("printBtn");
+if (printBtn) {
+  printBtn.addEventListener("click", () => window.print());
+}
+
 });
 
 function toggleMode() {
