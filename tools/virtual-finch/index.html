@@ -1,1 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Virtual Finch Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1 id="toolTitle">Virtual Finch Simulator</h1>
+      <p id="toolDesc" class="muted"></p>
+    </div>
+    <div class="topbar-right">
+      <button id="runBtn" class="btn primary">Run</button>
+      <button id="stopBtn" class="btn">Stop</button>
+      <button id="resetBtn" class="btn">Reset</button>
+      <button id="printBtn" class="btn">Print</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2>Build your movement rules</h2>
+      <p class="muted">Create rules that map key presses to movement.</p>
+
+      <div class="builder">
+        <div class="row">
+          <label for="eventSelect">When</label>
+          <select id="eventSelect"></select>
+        </div>
+
+        <div class="row">
+          <label for="actionSelect">Do</label>
+          <select id="actionSelect"></select>
+        </div>
+
+        <button id="addRuleBtn" class="btn primary">Add rule</button>
+      </div>
+
+      <h3>Current rules</h3>
+      <div id="rulesList" class="rulesList"></div>
+
+      <details class="advanced">
+        <summary>Export or import rules</summary>
+        <div class="advanced-inner">
+          <button id="exportBtn" class="btn">Export JSON</button>
+          <button id="importBtn" class="btn">Import JSON</button>
+          <textarea id="rulesJson" spellcheck="false" placeholder="Rules JSON will appear here"></textarea>
+          <p id="status" class="status"></p>
+        </div>
+      </details>
+    </section>
+
+    <section class="panel">
+      <h2>Virtual Finch space</h2>
+      <p class="muted">Click Run, then press arrow keys to move.</p>
+
+      <div id="world" class="world" aria-label="Virtual Finch world">
+        <div id="finch" class="finch" aria-label="Virtual Finch"></div>
+      </div>
+
+      <div class="hud">
+        <div><strong>Position:</strong> <span id="posText">x 0, y 0</span></div>
+        <div><strong>Status:</strong> <span id="runText">Stopped</span></div>
+      </div>
+
+      <div class="howto">
+        <h3>How to play</h3>
+        <ul>
+          <li>Add at least one rule for an arrow key.</li>
+          <li>Click Run.</li>
+          <li>Press arrow keys to move the Finch.</li>
+          <li>Reset returns the Finch to the start position.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="core.js"></script>
+</body>
+</html>
 
