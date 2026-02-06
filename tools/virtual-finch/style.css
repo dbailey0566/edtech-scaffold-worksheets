@@ -175,3 +175,36 @@ ul {
   padding: 4px 10px;
   border-radius: 999px;
 }
+
+.level-complete {
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.level-complete h3 {
+  margin-top: 0;
+}
+
+.level-complete ul {
+  margin-left: 18px;
+  color: #4b5563;
+}
+
+.next-level {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.next-level.disabled {
+  background: #d1d5db;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
