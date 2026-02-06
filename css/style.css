@@ -94,3 +94,29 @@ textarea {
   padding: 5px;
   margin-top: 5px;
 }
+@media print {
+  header button {
+    display: none;
+  }
+
+  .control-map {
+    page-break-after: avoid;
+  }
+
+  select {
+    display: none;
+  }
+
+  textarea {
+    border: 1px solid #000;
+  }
+
+  .instructor-note {
+    display: none !important;
+  }
+
+  .step {
+    page-break-inside: avoid;
+  }
+}
+
