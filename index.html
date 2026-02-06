@@ -3,19 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <title>EdTech Scaffold Worksheets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      color: #ffffff;
+      padding: 48px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    header p {
+      margin-top: 12px;
+      font-size: 18px;
+      opacity: 0.9;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .scaffold-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .scaffold-card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .scaffold-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .level-tag {
+      display: inline-block;
+      background: #e0e7ff;
+      color: #1e40af;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      width: fit-content;
+    }
+
+    .scaffold-card h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .scaffold-card p {
+      margin: 10px 0 18px 0;
+      color: #4b5563;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .launch-link {
+      text-decoration: none;
+      background: #2563eb;
+      color: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      text-align: center;
+      transition: background 0.15s ease;
+    }
+
+    .launch-link:hover {
+      background: #1e40af;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+  </style>
 </head>
+
 <body>
 
-  <h1>EdTech Scaffold Worksheets</h1>
-  <p>Instructional scaffolds for classroom educational technology.</p>
+  <header>
+    <h1>EdTech Scaffold Worksheets</h1>
+    <p>
+      Interactive instructional scaffolds designed to help students reason
+      through educational technology concepts before using physical hardware.
+    </p>
+  </header>
 
-  <h2>Available Scaffolds</h2>
-  <ul>
-    <li>
-      <a href="tools/finch/">Finch Robot – Remote Control Car Scaffold</a>
-    </li>
-  </ul>
+  <main>
+    <h2>Available Scaffolds</h2>
+
+    <div class="scaffold-grid">
+
+      <!-- Level 1 -->
+      <div class="scaffold-card">
+        <div>
+          <span class="level-tag">Level 1</span>
+          <h3>Virtual Finch Movement</h3>
+          <p>
+            Build event-driven movement rules and control a virtual Finch using
+            arrow keys. Focuses on logic, direction, and cause–effect reasoning.
+          </p>
+        </div>
+
+        <a class="launch-link" href="tools/virtual-finch/index.html">
+          Launch Level 1
+        </a>
+      </div>
+
+      <!-- Placeholder for future levels -->
+      <div class="scaffold-card" style="opacity: 0.5;">
+        <div>
+          <span class="level-tag">Level 2</span>
+          <h3>Continuous Movement & Control</h3>
+          <p>
+            Extend movement logic by holding keys, managing state, and reasoning
+            about sustained actions.
+          </p>
+        </div>
+
+        <span class="launch-link" style="background:#9ca3af; cursor:not-allowed;">
+          Coming Soon
+        </span>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    EdTech Scaffold Worksheets · Designed for instructional clarity and transfer
+  </footer>
 
 </body>
 </html>
