@@ -1,11 +1,8 @@
 (() => {
   "use strict";
 
-  const cfg = window.virtualFinchConfig;
-  if (!cfg) {
-    console.error("virtualFinchConfig not found. Make sure config.js loads before core.js.");
-    return;
-  }
+  // ---------- CONFIG (deferred) ----------
+  let cfg;
 
   // ---------- DOM ----------
   const elTitle = document.getElementById("toolTitle");
@@ -32,21 +29,10 @@
   const posText = document.getElementById("posText");
   const runText = document.getElementById("runText");
 
-  // ---------- INIT STATIC UI ----------
-  elTitle.textContent = cfg.toolMeta?.title || "Virtual Finch Simulator";
-  if (elDesc) elDesc.textContent = cfg.toolMeta?.description || "";
-
-  worldEl.style.width = `${cfg.world.width}px`;
-  worldEl.style.height = `${cfg.world.height}px`;
-
-  finchEl.style.width = `${cfg.finch.size}px`;
-  finchEl.style.height = `${cfg.finch.size}px`;
-  finchEl.style.borderRadius = cfg.finch.shape === "circle" ? "999px" : "6px";
-
   // ---------- STATE ----------
   let isRunning = false;
   let rules = [];
-  let position = { ...cfg.finch.startPosition };
+  let position = { x: 0, y: 0 };
 
   // ---------- HELPERS ----------
   function setStatus(msg) {
@@ -136,7 +122,7 @@
       card.style.fontSize = "14px";
 
       const text = document.createElement("div");
-      text.textContent = `${ev?.label} → ${ac?.label}`;
+      text.textContent = `${ev.label} → ${ac.label}`;
 
       const delBtn = document.createElement("button");
       delBtn.textContent = "Remove";
@@ -185,12 +171,11 @@
     if (!action) return;
 
     const step = cfg.world.stepSize;
-    const next = {
+    position = clampPosition({
       x: position.x + action.delta.x * step,
       y: position.y + action.delta.y * step
-    };
+    });
 
-    position = clampPosition(next);
     draw();
   }
 
@@ -206,7 +191,7 @@
         rules,
         meta: {
           exportedAt: new Date().toISOString(),
-          tool: cfg.toolMeta?.title
+          tool: cfg.toolMeta.title
         }
       },
       null,
@@ -236,11 +221,28 @@
 
   // ---------- BOOT ----------
   function init() {
+    cfg = window.virtualFinchConfig;
+
+    if (!cfg) {
+      console.error("virtualFinchConfig still not available at init()");
+      return;
+    }
+
+    elTitle.textContent = cfg.toolMeta.title;
+    if (elDesc) elDesc.textContent = cfg.toolMeta.description;
+
+    worldEl.style.width = `${cfg.world.width}px`;
+    worldEl.style.height = `${cfg.world.height}px`;
+
+    finchEl.style.width = `${cfg.finch.size}px`;
+    finchEl.style.height = `${cfg.finch.size}px`;
+    finchEl.style.borderRadius =
+      cfg.finch.shape === "circle" ? "999px" : "6px";
+
     populateSelects();
     renderRules();
     reset();
     setRunState(false);
-    draw();
 
     addRuleBtn.addEventListener("click", addRule);
     runBtn.addEventListener("click", () => setRunState(true));
