@@ -237,22 +237,31 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    populateSelects();
-    renderRules();
-    reset();
-    setRunState(false);
+  function init() {
+  populateSelects();
+  renderRules();
+  reset();
+  setRunState(false);
 
-    addRuleBtn.addEventListener("click", addRule);
-    runBtn.addEventListener("click", () => setRunState(true));
-    stopBtn.addEventListener("click", () => setRunState(false));
-    resetBtn.addEventListener("click", reset);
+  addRuleBtn.addEventListener("click", addRule);
+  runBtn.addEventListener("click", () => setRunState(true));
+  stopBtn.addEventListener("click", () => setRunState(false));
+  resetBtn.addEventListener("click", reset);
 
-    printBtn.addEventListener("click", () => window.print());
+  printBtn.addEventListener("click", () => window.print());
 
-    exportBtn.addEventListener("click", exportRules);
-    importBtn.addEventListener("click", importRules);
+  exportBtn.addEventListener("click", exportRules);
+  importBtn.addEventListener("click", importRules);
 
-    window.addEventListener("keydown", onKeyDown);
-  });
+  window.addEventListener("keydown", onKeyDown);
+}
+
+// Run immediately if DOM is already loaded
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
+
+
 })();
