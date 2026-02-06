@@ -4,7 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Virtual Finch Simulator</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- IMPORTANT: folder-relative path -->
+  <link rel="stylesheet" href="./style.css" />
 </head>
 
 <body>
@@ -43,13 +45,16 @@
 
       <details>
         <summary>Export or import rules</summary>
+
         <button id="exportBtn">Export JSON</button>
         <button id="importBtn">Import JSON</button>
+
         <textarea
           id="rulesJson"
           spellcheck="false"
           placeholder="Rules JSON will appear here"
         ></textarea>
+
         <p id="status" class="status"></p>
       </details>
     </section>
@@ -81,7 +86,9 @@
 
   </main>
 
-  <script src="config.js"></script>
-  <script src="core.js"></script>
+  <!-- IMPORTANT: order + folder-relative paths -->
+  <script src="./config.js"></script>
+  <script src="./core.js"></script>
+
 </body>
 </html>
