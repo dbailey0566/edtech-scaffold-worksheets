@@ -100,9 +100,13 @@ function renderFinchScaffold(config) {
         <p>${step.instructorNote || ""}</p>
       </div>
 
-      ${step.failures ? renderDebuggingUI(step) : `
-        <textarea placeholder="Student notes..."></textarea>
-      `}
+      ${
+        step.codePractice
+          ? renderCodePractice(step)
+          : step.failures
+          ? renderDebuggingUI(step)
+          : `<textarea placeholder="Student notes..."></textarea>`
+      }
 
       <button class="completeStep">Mark Step Complete</button>
     `;
@@ -113,6 +117,36 @@ function renderFinchScaffold(config) {
   document.querySelectorAll(".completeStep").forEach(button => {
     button.addEventListener("click", handleStepCompletion);
   });
+}
+
+/* ---------------------------
+   CODE PRACTICE (STEP 3)
+---------------------------- */
+function renderCodePractice(step) {
+  return `
+    <div class="code-practice">
+      <p><strong>Event:</strong> ${step.codePractice.event}</p>
+
+      <label>First action block:</label>
+      <select class="blockSelect">
+        <option value="">-- choose a block --</option>
+        ${step.codePractice.blocks.map(
+          b => `<option value="${b}">${b}</option>`
+        ).join("")}
+      </select>
+
+      <label>Second action block:</label>
+      <select class="blockSelect">
+        <option value="">-- choose a block --</option>
+        ${step.codePractice.blocks.map(
+          b => `<option value="${b}">${b}</option>`
+        ).join("")}
+      </select>
+
+      <p><strong>Explain your logic:</strong></p>
+      <textarea placeholder="${step.codePractice.explanationPrompt}"></textarea>
+    </div>
+  `;
 }
 
 /* ---------------------------
