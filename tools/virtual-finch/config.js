@@ -1,3 +1,5 @@
+// IMPORTANT: leave this log in temporarily for verification
+console.log("config.js loaded");
 
 const virtualFinchConfig = {
   toolMeta: {
@@ -20,16 +22,48 @@ const virtualFinchConfig = {
   },
 
   events: [
-    { id: "arrow_up", label: "When Up Arrow Pressed", key: "ArrowUp" },
-    { id: "arrow_down", label: "When Down Arrow Pressed", key: "ArrowDown" },
-    { id: "arrow_left", label: "When Left Arrow Pressed", key: "ArrowLeft" },
-    { id: "arrow_right", label: "When Right Arrow Pressed", key: "ArrowRight" }
+    {
+      id: "arrow_up",
+      label: "When Up Arrow Pressed",
+      key: "ArrowUp"
+    },
+    {
+      id: "arrow_down",
+      label: "When Down Arrow Pressed",
+      key: "ArrowDown"
+    },
+    {
+      id: "arrow_left",
+      label: "When Left Arrow Pressed",
+      key: "ArrowLeft"
+    },
+    {
+      id: "arrow_right",
+      label: "When Right Arrow Pressed",
+      key: "ArrowRight"
+    }
   ],
 
   actions: [
-    { id: "move_up", label: "Move Up", delta: { x: 0, y: -1 } },
-    { id: "move_down", label: "Move Down", delta: { x: 0, y: 1 } },
-    { id: "move_left", label: "Move Left", delta: { x: -1, y: 0 } },
-    { id: "move_right", label: "Move Right", delta: { x: 1, y: 0 } }
+    {
+      id: "move_up",
+      label: "Move Up",
+      delta: { x: 0, y: -1 }
+    },
+    {
+      id: "move_down",
+      label: "Move Down",
+      delta: { x: 0, y: 1 }
+    },
+    {
+      id: "move_left",
+      label: "Move Left",
+      delta: { x: -1, y: 0 }
+    },
+    {
+      id: "move_right",
+      label: "Move Right",
+      delta: { x: 1, y: 0 }
+    }
   ]
 };
