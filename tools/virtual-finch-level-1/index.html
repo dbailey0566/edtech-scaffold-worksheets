@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Virtual Finch Simulator</title>
+
+  <!-- IMPORTANT: folder-relative path -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+
+  <header class="sim-header">
+    <a href="../../index.html" class="home-link">← Home</a>
+    <div class="title-wrap">
+      <h1 id="toolTitle">Virtual Finch Simulator Level 1</h1>
+      <p id="toolDesc">
+        Build movement logic using blocks, then test it in a virtual space.
+      </p>
+    </div>
+    <span class="level-pill">Level 1</span>
+  </header>
+
+  <main>
+
+    <!-- LEFT PANEL: RULE BUILDER -->
+    <section>
+      <h2>Build your movement rules</h2>
+      <p>Create rules that map key presses to movement.</p>
+
+      <div class="controls">
+        <button id="runBtn" class="primary">Run</button>
+        <button id="stopBtn">Stop</button>
+        <button id="resetBtn">Reset</button>
+        <button id="printBtn">Print</button>
+      </div>
+
+      <div class="rule-builder">
+        <label for="eventSelect">When</label>
+        <select id="eventSelect"></select>
+
+        <label for="actionSelect">Do</label>
+        <select id="actionSelect"></select>
+      </div>
+
+      <button id="addRuleBtn" class="primary">Add rule</button>
+
+      <h3>Current rules</h3>
+      <div id="rulesList" class="rule-list"></div>
+
+      <details>
+        <summary>Export or import rules</summary>
+
+        <button id="exportBtn">Export JSON</button>
+        <button id="importBtn">Import JSON</button>
+
+        <textarea
+          id="rulesJson"
+          spellcheck="false"
+          placeholder="Rules JSON will appear here"
+        ></textarea>
+
+        <p id="status" class="status"></p>
+      </details>
+    </section>
+
+    <!-- RIGHT PANEL: VIRTUAL FINCH -->
+    <section>
+      <h2>Virtual Finch space</h2>
+      <p>Click Run, then press arrow keys to move.</p>
+
+      <div class="world-wrapper">
+        <div id="world" class="world" aria-label="Virtual Finch world">
+          <div id="finch" class="finch" aria-label="Virtual Finch"></div>
+        </div>
+      </div>
+
+      <div class="status">
+        <div><strong>Position:</strong> <span id="posText">x 0, y 0</span></div>
+        <div><strong>Status:</strong> <span id="runText">Stopped</span></div>
+      </div>
+
+      <h3>How to play</h3>
+      <ul>
+        <li>Add at least one rule for an arrow key</li>
+        <li>Click Run</li>
+        <li>Press arrow keys to move the Finch</li>
+        <li>Reset returns the Finch to the start position</li>
+      </ul>
+    </section>
+
+    <section class="level-complete">
+  <h3>Ready for Level 2?</h3>
+
+  <p>
+    Level 2 introduces continuous movement and state.
+    Before moving on, make sure you can explain how your
+    Level 1 rules control movement step by step.
+  </p>
+
+  <ul>
+    <li>All arrow keys move the Finch correctly</li>
+    <li>You can predict the Finch’s position before pressing a key</li>
+    <li>You understand why movement happens one step at a time</li>
+  </ul>
+
+  <a class="next-level disabled" href="#">
+    Proceed to Level 2 (coming soon)
+  </a>
+</section>
+
+
+  </main>
+
+  <!-- IMPORTANT: order + folder-relative paths -->
+  <script src="./config.js"></script>
+  <script src="./core.js"></script>
+
+</body>
+</html>
