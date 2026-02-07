@@ -35,30 +35,28 @@
       </p>
 
       <div class="controls">
-        <label for="stepsInput"><strong>Steps to move</strong></label>
-        <input type="number" id="stepsInput" min="1" value="5" />
-
-        <label for="directionSelect" style="margin-top:12px;"><strong>Direction</strong></label>
-        <select id="directionSelect">
-          <option value="right">Right</option>
-          <option value="left">Left</option>
-          <option value="up">Up</option>
-          <option value="down">Down</option>
-        </select>
-
-        <div style="margin-top:14px;">
-          <button id="runBtn" class="primary">Run</button>
-        </div>
+        <label>
+          Direction:
+          <select id="directionSelect">
+            <option value="right">Right</option>
+            <option value="left">Left</option>
+            <option value="up">Up</option>
+            <option value="down">Down</option>
+          </select>
+        </label>
+      
+        <label>
+          Steps:
+          <input type="number" id="stepsInput" min="1" value="1">
+        </label>
+      
+        <button id="addCommandBtn">Add Command</button>
+        <button id="runBtn" class="primary">Run Program</button>
       </div>
+      
+      <h3>Program</h3>
+      <ul id="programList"></ul>
 
-      <h3>How to play</h3>
-      <ul>
-        <li>Look at the yellow target location</li>
-        <li>Use grid lines to count spaces</li>
-        <li>Select a direction</li>
-        <li>Enter a step count</li>
-        <li>Click Run and see if your plan works</li>
-      </ul>
 
       <p id="status" class="status"></p>
     </section>
