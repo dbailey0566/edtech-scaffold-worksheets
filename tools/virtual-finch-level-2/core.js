@@ -17,6 +17,7 @@
   const rulesList = document.getElementById("rulesList");
 
   const stepInput = document.getElementById("stepInput");
+  const wallMode = document.getElementById("wallMode");
 
   const runBtn = document.getElementById("runBtn");
   const stopBtn = document.getElementById("stopBtn");
@@ -39,7 +40,9 @@
 
   let activeDirections = new Set();
   let moveInterval = null;
-
+  let remainingSpaces = 0;
+  let currentDirection = null;
+  let directionVector = { x: 0, y: 0 };
   // ---------- HELPERS ----------
   function setStatus(msg) {
     statusEl.textContent = msg || "";
@@ -172,64 +175,92 @@
 
   // ---------- MOVEMENT (LEVEL 2) ----------
   function applyContinuousMovement() {
-    let next = { ...position };
-
-    const spaces = Math.max(1, parseInt(stepInput.value, 10) || 1);
-    const stepSize = spaces * SPACE_SIZE;
-
-    activeDirections.forEach(eventId => {
-      const rule = rules.find(r => r.eventId === eventId);
-      if (!rule) return;
-
-      const action = getActionById(rule.actionId);
-      if (!action) return;
-
-      next.x += action.delta.x * stepSize;
-      next.y += action.delta.y * stepSize;
-    });
-
-    position = clampPosition(next);
-    draw();
+    if (remainingSpaces <= 0 || !currentDirection) {
+      clearInterval(moveInterval);
+      moveInterval = null;
+      return;
+    }
+  
+    let next = {
+      x: position.x + directionVector.x * SPACE_SIZE,
+      y: position.y + directionVector.y * SPACE_SIZE
+    };
+  
+    const maxX = cfg.world.width - cfg.finch.size;
+    const maxY = cfg.world.height - cfg.finch.size;
+  
+    const hitLeft   = next.x < 0;
+    const hitRight  = next.x > maxX;
+    const hitTop    = next.y < 0;
+    const hitBottom = next.y > maxY;
+  
+    if (hitLeft || hitRight || hitTop || hitBottom) {
+      if (wallMode.value === "bounce") {
+        if (hitLeft || hitRight) directionVector.x *= -1;
+        if (hitTop || hitBottom) directionVector.y *= -1;
+      } else {
+        remainingSpaces = 0;
+        return;
+      }
+    } else {
+      position = next;
+      draw();
+    }
+  
+    remainingSpaces--;
   }
 
-  function onKeyDown(e) {
-    if (!isRunning) return;
 
+
+  function onKeyDown(e) {
+    if (!isRunning || moveInterval) return;
+  
     const ev = cfg.events.find(evt => evt.key === e.key);
     if (!ev) return;
-
+  
+    const rule = rules.find(r => r.eventId === ev.id);
+    if (!rule) return;
+  
+    const action = getActionById(rule.actionId);
+    if (!action) return;
+  
     e.preventDefault();
-    activeDirections.add(ev.id);
-
-    if (!moveInterval) {
-      moveInterval = setInterval(applyContinuousMovement, 30);
-    }
+  
+    remainingSpaces = Math.max(1, parseInt(stepInput.value, 10) || 1);
+    currentDirection = ev.id;
+    directionVector = { ...action.delta };
+  
+    moveInterval = setInterval(applyContinuousMovement, 40);
   }
 
   function onKeyUp(e) {
     const ev = cfg.events.find(evt => evt.key === e.key);
     if (!ev) return;
-
-    activeDirections.delete(ev.id);
-
-    if (activeDirections.size === 0 && moveInterval) {
-      clearInterval(moveInterval);
-      moveInterval = null;
-    }
-  }
-
-  function reset() {
-    position = { ...cfg.finch.startPosition };
-    activeDirections.clear();
-
+  
+    remainingSpaces = 0;
+    currentDirection = null;
+  
     if (moveInterval) {
       clearInterval(moveInterval);
       moveInterval = null;
     }
-
-    draw();
-    setStatus("Reset to start position.");
   }
+  
+  
+    function reset() {
+      position = { ...cfg.finch.startPosition };
+      activeDirections.clear();
+  
+      if (moveInterval) {
+        clearInterval(moveInterval);
+        moveInterval = null;
+      }
+  
+      draw();
+      setStatus("Reset to start position.");
+      remainingSpaces = 0;
+      currentDirection = null;
+    }
 
   // ---------- IMPORT / EXPORT ----------
   function exportRules() {
