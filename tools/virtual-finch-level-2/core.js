@@ -32,6 +32,7 @@
   const runText = document.getElementById("runText");
 
   // ---------- STATE ----------
+  const SPACE_SIZE = 20; // pixels per space
   let isRunning = false;
   let rules = [];
   let position = { x: 0, y: 0 };
@@ -156,7 +157,8 @@
   function applyContinuousMovement() {
     let next = { ...position };
 
-    const stepSize = Math.max(1, parseInt(stepInput.value, 10) || 1);
+    const spaces = Math.max(1, parseInt(stepInput.value, 10) || 1);
+    const stepSize = spaces * SPACE_SIZE;
 
     activeDirections.forEach(eventId => {
       const rule = rules.find(r => r.eventId === eventId);
