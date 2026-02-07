@@ -1,22 +1,59 @@
-const finch = document.getElementById("finch");
-const target = document.getElementById("target");
+const finchEl = document.getElementById("finch");
+const stepsInput = document.getElementById("stepsInput");
+const runBtn = document.getElementById("runBtn");
 const statusEl = document.getElementById("status");
 
 const CELL_SIZE = 40;
+const GRID_WIDTH = 10;
 
-// starting positions
-let finchPos = { x: 0, y: 0 };
-let targetPos = { x: 5, y: 3 };
+let finch = {
+  x: 0,
+  y: 0
+};
 
-function draw() {
-  finch.style.left = `${finchPos.x * CELL_SIZE}px`;
-  finch.style.top = `${finchPos.y * CELL_SIZE}px`;
+let moving = false;
 
-  target.style.left = `${targetPos.x * CELL_SIZE}px`;
-  target.style.top = `${targetPos.y * CELL_SIZE}px`;
+function drawFinch() {
+  finchEl.style.left = `${finch.x * CELL_SIZE}px`;
+  finchEl.style.top = `${finch.y * CELL_SIZE}px`;
 }
 
-draw();
+function moveStep() {
+  finch.x += 1;
 
-statusEl.textContent = "Level 3 ready.";
+  if (finch.x >= GRID_WIDTH) {
+    finch.x = GRID_WIDTH - 1;
+  }
 
+  drawFinch();
+}
+
+function runMovement(steps) {
+  if (moving) return;
+
+  moving = true;
+  statusEl.textContent = "Moving...";
+
+  let stepsRemaining = steps;
+
+  const interval = setInterval(() => {
+    if (stepsRemaining <= 0) {
+      clearInterval(interval);
+      moving = false;
+      statusEl.textContent = "Movement complete.";
+      return;
+    }
+
+    moveStep();
+    stepsRemaining -= 1;
+  }, 400);
+}
+
+runBtn.addEventListener("click", () => {
+  const steps = parseInt(stepsInput.value, 10);
+  if (isNaN(steps) || steps <= 0) return;
+
+  runMovement(steps);
+});
+
+drawFinch();
