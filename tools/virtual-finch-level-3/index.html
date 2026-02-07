@@ -30,10 +30,11 @@
     <section>
       <h2>Plan your movement</h2>
       <p>
-        The yellow target is randomized every run. Use the grid to count spaces,
-        then choose a direction and step count to try to reach the target.
+        The yellow target stays in place until it is reached.
+        Use the grid to count spaces, then build a sequence of movement commands
+        to guide the Finch to the target.
       </p>
-
+    
       <div class="controls">
         <label>
           Direction:
@@ -44,22 +45,35 @@
             <option value="down">Down</option>
           </select>
         </label>
-      
+    
         <label>
           Steps:
           <input type="number" id="stepsInput" min="1" value="1">
         </label>
-      
+    
         <button id="addCommandBtn">Add Command</button>
         <button id="runBtn" class="primary">Run Program</button>
+        <button id="resetBtn">Reset</button>
+        <button id="exportBtn">Export JSON</button>
+        <button id="printBtn">Print</button>
       </div>
-      
+    
       <h3>Program</h3>
       <ul id="programList"></ul>
-
-
+      
+      <details>
+        <summary>Program JSON</summary>
+        <textarea
+          id="programJson"
+          spellcheck="false"
+          style="width:100%; height:120px;"
+          placeholder="Program JSON will appear here"
+        ></textarea>
+      </details>
+      
       <p id="status" class="status"></p>
     </section>
+
 
     <!-- RIGHT PANEL: VIRTUAL FINCH -->
     <section>
