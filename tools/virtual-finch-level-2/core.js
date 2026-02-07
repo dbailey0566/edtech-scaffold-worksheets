@@ -16,6 +16,8 @@
   const addRuleBtn = document.getElementById("addRuleBtn");
   const rulesList = document.getElementById("rulesList");
 
+  const stepInput = document.getElementById("stepInput");
+
   const runBtn = document.getElementById("runBtn");
   const stopBtn = document.getElementById("stopBtn");
   const resetBtn = document.getElementById("resetBtn");
@@ -34,7 +36,6 @@
   let rules = [];
   let position = { x: 0, y: 0 };
 
-  // Level 2 additions
   let activeDirections = new Set();
   let moveInterval = null;
 
@@ -52,13 +53,6 @@
   function clampPosition(next) {
     const maxX = cfg.world.width - cfg.finch.size;
     const maxY = cfg.world.height - cfg.finch.size;
-
-    if (cfg.world.boundary === "wrap") {
-      return {
-        x: (next.x + maxX + 1) % (maxX + 1),
-        y: (next.y + maxY + 1) % (maxY + 1)
-      };
-    }
 
     return {
       x: Math.max(0, Math.min(maxX, next.x)),
@@ -161,6 +155,8 @@
   function applyContinuousMovement() {
     let next = { ...position };
 
+    const stepSize = Math.max(1, parseInt(stepInput.value, 10) || 1);
+
     activeDirections.forEach(eventId => {
       const rule = rules.find(r => r.eventId === eventId);
       if (!rule) return;
@@ -168,8 +164,8 @@
       const action = getActionById(rule.actionId);
       if (!action) return;
 
-      next.x += action.delta.x * cfg.world.speed;
-      next.y += action.delta.y * cfg.world.speed;
+      next.x += action.delta.x * stepSize;
+      next.y += action.delta.y * stepSize;
     });
 
     position = clampPosition(next);
@@ -216,17 +212,7 @@
 
   // ---------- IMPORT / EXPORT ----------
   function exportRules() {
-    rulesJson.value = JSON.stringify(
-      {
-        rules,
-        meta: {
-          exportedAt: new Date().toISOString(),
-          tool: cfg.toolMeta.title
-        }
-      },
-      null,
-      2
-    );
+    rulesJson.value = JSON.stringify({ rules }, null, 2);
     setStatus("Rules exported.");
   }
 
@@ -235,28 +221,18 @@
       const parsed = JSON.parse(rulesJson.value);
       if (!Array.isArray(parsed.rules)) throw new Error();
 
-      const validEvents = new Set(cfg.events.map(e => e.id));
-      const validActions = new Set(cfg.actions.map(a => a.id));
-
-      rules = parsed.rules.filter(
-        r => validEvents.has(r.eventId) && validActions.has(r.actionId)
-      );
-
+      rules = parsed.rules;
       renderRules();
       setStatus("Rules imported.");
     } catch {
-      setStatus("Invalid JSON. Check the format and try again.");
+      setStatus("Invalid JSON.");
     }
   }
 
   // ---------- INIT ----------
   function init() {
     cfg = window.virtualFinchConfig;
-
-    if (!cfg) {
-      console.error("virtualFinchConfig not found");
-      return;
-    }
+    if (!cfg) return;
 
     elTitle.textContent = cfg.toolMeta.title;
     if (elDesc) elDesc.textContent = cfg.toolMeta.description;
@@ -292,4 +268,3 @@
     init();
   }
 })();
-
