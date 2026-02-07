@@ -1,1 +1,213 @@
+/* =========================
+   Base reset
+   ========================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  background: #f9fafb;
+  color: #111827;
+}
+
+/* =========================
+   Top bar
+   ========================= */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.topbar-left h1 {
+  margin: 4px 0 0 0;
+  font-size: 22px;
+}
+
+.topbar-left p {
+  margin: 2px 0 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.home-link {
+  text-decoration: none;
+  font-size: 14px;
+  color: #2563eb;
+}
+
+.home-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   Buttons
+   ========================= */
+.btn {
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #f3f4f6;
+}
+
+.btn.primary {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.btn.primary:hover {
+  background: #1d4ed8;
+}
+
+/* =========================
+   Layout
+   ========================= */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.panel {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.panel h2 {
+  margin-top: 0;
+}
+
+.muted {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* =========================
+   Rule builder
+   ========================= */
+.builder {
+  margin-top: 12px;
+}
+
+.builder .row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.builder label {
+  width: 60px;
+  font-size: 14px;
+}
+
+.builder select {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
+.rulesList {
+  margin-top: 10px;
+}
+
+/* =========================
+   Advanced section
+   ========================= */
+details.advanced {
+  margin-top: 14px;
+}
+
+details summary {
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.advanced-inner {
+  margin-top: 10px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 120px;
+  font-family: monospace;
+  font-size: 13px;
+  padding: 8px;
+  margin-top: 8px;
+}
+
+/* =========================
+   Virtual world
+   ========================= */
+.world {
+  position: relative;
+  margin-top: 10px;
+  background: #f3f4f6;
+  border: 2px dashed #9ca3af;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.finch {
+  position: absolute;
+  background: #2563eb;
+}
+
+/* =========================
+   HUD
+   ========================= */
+.hud {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* =========================
+   How to play
+   ========================= */
+.howto {
+  margin-top: 14px;
+}
+
+.howto ul {
+  padding-left: 18px;
+}
+
+.howto li {
+  margin-bottom: 6px;
+}
+
+/* =========================
+   Status messages
+   ========================= */
+.status {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #374151;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
 
