@@ -217,3 +217,11 @@ ul {
   border: 2px solid #333;
   box-sizing: border-box;
 }
+
+.world {
+  background-image:
+    linear-gradient(to right, #ddd 1px, transparent 1px),
+    linear-gradient(to bottom, #ddd 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
