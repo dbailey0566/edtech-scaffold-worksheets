@@ -71,14 +71,16 @@ function moveStep(interval) {
   if (reachedTarget()) {
     clearInterval(interval);
     moving = false;
-
+  
+    finchEl.classList.remove("moving");
     statusEl.textContent = "Target reached! New target generated.";
-
+  
     target = randomTarget();
     draw();
-
+  
     return true;
   }
+
 
   return false;
 }
@@ -88,6 +90,7 @@ function runProgram() {
 
   moving = true;
   statusEl.textContent = "Running program...";
+  finchEl.classList.add("moving");
 
   // reset finch at start of program
   finch.x = 0;
@@ -103,23 +106,29 @@ function runProgram() {
   const interval = setInterval(() => {
     if (stepsRemaining <= 0) {
       commandIndex += 1;
-
+  
+      // ✅ PROGRAM FINISHED
       if (commandIndex >= program.length) {
         clearInterval(interval);
         moving = false;
+  
+        finchEl.classList.remove("moving");
         statusEl.textContent = "Program complete.";
+  
         return;
       }
-
+  
+      // move to next command
       finch.dx = program[commandIndex].dx;
       finch.dy = program[commandIndex].dy;
       stepsRemaining = program[commandIndex].steps;
       return;
     }
-
+  
+    // ✅ STEP EXECUTION (this is where target detection happens)
     const hitTarget = moveStep(interval);
     if (hitTarget) return;
-
+  
     stepsRemaining -= 1;
   }, 400);
 }
