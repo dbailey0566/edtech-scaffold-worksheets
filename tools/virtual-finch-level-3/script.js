@@ -205,3 +205,5 @@ printBtn.addEventListener("click", () => {
   }
   window.print();
 });
+draw();
+statusEl.textContent = "Build a program, then run it.";
