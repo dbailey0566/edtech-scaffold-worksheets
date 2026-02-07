@@ -61,18 +61,20 @@ function moveStep(interval) {
   draw();
 
   if (reachedTarget()) {
-  clearInterval(interval);
-  moving = false;
+    clearInterval(interval);
+    moving = false;
 
-  statusEl.textContent = "Target reached! New target generated.";
+    statusEl.textContent = "Target reached! New target generated.";
 
-  // generate new target AFTER success
-  target = randomTarget();
-  draw();
+    // generate new target ONLY after success
+    target = randomTarget();
+    draw();
 
-  return true;
+    return true;
+  }
+
+  return false;
 }
-
 
 function runMovement(steps) {
   if (moving) return;
@@ -102,32 +104,25 @@ function runMovement(steps) {
 runBtn.addEventListener("click", () => {
   const steps = parseInt(stepsInput.value, 10);
   if (isNaN(steps) || steps <= 0) return;
+  if (moving) return;
 
-  // reset finch position
+  // reset finch only
   finch.x = 0;
   finch.y = 0;
 
   // set direction from student choice
   const direction = directionSelect.value;
 
-  if (direction === "right") {
-    finch.dx = 1; finch.dy = 0;
-  }
-  if (direction === "left") {
-    finch.dx = -1; finch.dy = 0;
-  }
-  if (direction === "up") {
-    finch.dx = 0; finch.dy = -1;
-  }
-  if (direction === "down") {
-    finch.dx = 0; finch.dy = 1;
-  }
+  if (direction === "right") { finch.dx = 1; finch.dy = 0; }
+  if (direction === "left")  { finch.dx = -1; finch.dy = 0; }
+  if (direction === "up")    { finch.dx = 0; finch.dy = -1; }
+  if (direction === "down")  { finch.dx = 0; finch.dy = 1; }
 
-  // randomize target each run
+  draw();
   runMovement(steps);
 });
 
-
+/* ---------- Init ---------- */
 
 draw();
 statusEl.textContent = "Choose a direction, enter steps, and plan your path.";
