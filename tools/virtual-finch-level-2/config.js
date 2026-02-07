@@ -1,19 +1,17 @@
-// Level 2 configuration: continuous movement with key hold
+// Level 2 configuration: continuous movement with user-defined distance
 console.log("Level 2 config.js loaded");
 
 const virtualFinchConfig = {
   toolMeta: {
     title: "Virtual Finch Simulator",
     description:
-      "Level 2 · Control a virtual Finch using continuous movement while holding keys."
+      "Level 2 · Control a virtual Finch using continuous movement and adjustable distance."
   },
 
   world: {
     width: 400,
     height: 400,
-    stepSize: 1,        // small step, movement happens repeatedly
-    speed: 3,           // pixels per tick
-    boundary: "stop"    // stop at walls
+    boundary: "stop" // stop at walls
   },
 
   finch: {
@@ -22,7 +20,7 @@ const virtualFinchConfig = {
     shape: "square"
   },
 
-  // Level 2 introduces HOLD-based events
+  // Level 2 uses HOLD-based events
   events: [
     {
       id: "arrow_up",
@@ -50,7 +48,7 @@ const virtualFinchConfig = {
     }
   ],
 
-  // Actions are still simple direction deltas
+  // Actions define direction only; distance is user-controlled
   actions: [
     {
       id: "move_up",
@@ -77,4 +75,3 @@ const virtualFinchConfig = {
 
 // Explicitly expose config for core.js
 window.virtualFinchConfig = virtualFinchConfig;
-
