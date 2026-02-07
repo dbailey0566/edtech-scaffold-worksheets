@@ -6,6 +6,10 @@ const runBtn = document.getElementById("runBtn");
 const statusEl = document.getElementById("status");
 const addCommandBtn = document.getElementById("addCommandBtn");
 const programListEl = document.getElementById("programList");
+const resetBtn = document.getElementById("resetBtn");
+const exportBtn = document.getElementById("exportBtn");
+const printBtn = document.getElementById("printBtn");
+const programJsonEl = document.getElementById("programJson");
 
 const CELL_SIZE = 40;
 const GRID_WIDTH = 10;
@@ -150,6 +154,8 @@ addCommandBtn.addEventListener("click", () => {
 
 /* ---------- Program Display ---------- */
 
+/* ---------- Program Display ---------- */
+
 function renderProgram() {
   programListEl.innerHTML = "";
 
@@ -164,7 +170,29 @@ function renderProgram() {
   });
 }
 
-/* ---------- Init ---------- */
+/* ---------- Reset / Export / Print ---------- */
 
-draw();
-statusEl.textContent = "Build a program, then run it.";
+resetBtn.addEventListener("click", () => {
+  moving = false;
+  program = [];
+
+  finch.x = 0;
+  finch.y = 0;
+
+  renderProgram();
+  draw();
+
+  statusEl.textContent = "Reset complete. Build a new program.";
+});
+
+exportBtn.addEventListener("click", () => {
+  programJsonEl.value = JSON.stringify(program, null, 2);
+  statusEl.textContent = "Program exported as JSON.";
+});
+
+printBtn.addEventListener("click", () => {
+  if (!programJsonEl.value) {
+    programJsonEl.value = JSON.stringify(program, null, 2);
+  }
+  window.print();
+});
