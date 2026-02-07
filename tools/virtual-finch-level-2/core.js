@@ -175,10 +175,11 @@
 
   // ---------- MOVEMENT (LEVEL 2) ----------
   function applyContinuousMovement() {
-    if (remainingSpaces <= 0 || !currentDirection) {
-      clearInterval(moveInterval);
-      moveInterval = null;
-      return;
+    if (!currentDirection) return;
+  
+    // Reload spaces automatically while key is held
+    if (remainingSpaces <= 0) {
+      remainingSpaces = Math.max(1, parseInt(stepInput.value, 10) || 1);
     }
   
     let nextX = position.x + directionVector.x * SPACE_SIZE;
@@ -193,7 +194,6 @@
         directionVector.x *= -1;
         nextX = position.x + directionVector.x * SPACE_SIZE;
       } else {
-        remainingSpaces = 0;
         return;
       }
     }
@@ -204,7 +204,6 @@
         directionVector.y *= -1;
         nextY = position.y + directionVector.y * SPACE_SIZE;
       } else {
-        remainingSpaces = 0;
         return;
       }
     }
@@ -212,15 +211,16 @@
     position.x = nextX;
     position.y = nextY;
   
-    remainingSpaces--; // ALWAYS consume one space
+    remainingSpaces--;
     draw();
   }
 
 
 
 
+
   function onKeyDown(e) {
-    if (!isRunning || moveInterval) return;
+    if (!isRunning || currentDirection) return;
   
     const ev = cfg.events.find(evt => evt.key === e.key);
     if (!ev) return;
@@ -233,12 +233,13 @@
   
     e.preventDefault();
   
-    remainingSpaces = Math.max(1, parseInt(stepInput.value, 10) || 1);
     currentDirection = ev.id;
     directionVector = { ...action.delta };
+    remainingSpaces = Math.max(1, parseInt(stepInput.value, 10) || 1);
   
     moveInterval = setInterval(applyContinuousMovement, 40);
   }
+
 
   function onKeyUp(e) {
     const ev = cfg.events.find(evt => evt.key === e.key);
