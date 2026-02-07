@@ -5,10 +5,13 @@ const statusEl = document.getElementById("status");
 
 const CELL_SIZE = 40;
 const GRID_WIDTH = 10;
+const GRID_HEIGHT = 10;
 
 let finch = {
   x: 0,
-  y: 0
+  y: 0,
+  dx: 1,
+  dy: 0
 };
 
 let moving = false;
@@ -18,12 +21,21 @@ function drawFinch() {
   finchEl.style.top = `${finch.y * CELL_SIZE}px`;
 }
 
-function moveStep() {
-  finch.x += 1;
-
-  if (finch.x >= GRID_WIDTH) {
-    finch.x = GRID_WIDTH - 1;
+function bounceIfNeeded() {
+  if (finch.x + finch.dx < 0 || finch.x + finch.dx >= GRID_WIDTH) {
+    finch.dx *= -1;
   }
+
+  if (finch.y + finch.dy < 0 || finch.y + finch.dy >= GRID_HEIGHT) {
+    finch.dy *= -1;
+  }
+}
+
+function moveStep() {
+  bounceIfNeeded();
+
+  finch.x += finch.dx;
+  finch.y += finch.dy;
 
   drawFinch();
 }
@@ -32,7 +44,7 @@ function runMovement(steps) {
   if (moving) return;
 
   moving = true;
-  statusEl.textContent = "Moving...";
+  statusEl.textContent = "Moving with bounce...";
 
   let stepsRemaining = steps;
 
