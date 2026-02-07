@@ -1,4 +1,5 @@
 const finchEl = document.getElementById("finch");
+const targetEl = document.getElementById("target");
 const stepsInput = document.getElementById("stepsInput");
 const runBtn = document.getElementById("runBtn");
 const statusEl = document.getElementById("status");
@@ -14,11 +15,19 @@ let finch = {
   dy: 0
 };
 
+let target = {
+  x: 6,
+  y: 0
+};
+
 let moving = false;
 
-function drawFinch() {
+function draw() {
   finchEl.style.left = `${finch.x * CELL_SIZE}px`;
   finchEl.style.top = `${finch.y * CELL_SIZE}px`;
+
+  targetEl.style.left = `${target.x * CELL_SIZE}px`;
+  targetEl.style.top = `${target.y * CELL_SIZE}px`;
 }
 
 function bounceIfNeeded() {
@@ -31,20 +40,33 @@ function bounceIfNeeded() {
   }
 }
 
-function moveStep() {
+function reachedTarget() {
+  return finch.x === target.x && finch.y === target.y;
+}
+
+function moveStep(interval, stepsRemainingRef) {
   bounceIfNeeded();
 
   finch.x += finch.dx;
   finch.y += finch.dy;
 
-  drawFinch();
+  draw();
+
+  if (reachedTarget()) {
+    clearInterval(interval);
+    moving = false;
+    statusEl.textContent = "Target reached. Movement stopped.";
+    return true;
+  }
+
+  return false;
 }
 
 function runMovement(steps) {
   if (moving) return;
 
   moving = true;
-  statusEl.textContent = "Moving with bounce...";
+  statusEl.textContent = "Moving...";
 
   let stepsRemaining = steps;
 
@@ -52,11 +74,13 @@ function runMovement(steps) {
     if (stepsRemaining <= 0) {
       clearInterval(interval);
       moving = false;
-      statusEl.textContent = "Movement complete.";
+      statusEl.textContent = "Out of steps. Target not reached.";
       return;
     }
 
-    moveStep();
+    const stopped = moveStep(interval);
+    if (stopped) return;
+
     stepsRemaining -= 1;
   }, 400);
 }
@@ -68,4 +92,5 @@ runBtn.addEventListener("click", () => {
   runMovement(steps);
 });
 
-drawFinch();
+draw();
+statusEl.textContent = "Enter steps and try to reach the target.";
