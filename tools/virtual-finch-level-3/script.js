@@ -4,10 +4,15 @@ const stepsInput = document.getElementById("stepsInput");
 const directionSelect = document.getElementById("directionSelect");
 const runBtn = document.getElementById("runBtn");
 const statusEl = document.getElementById("status");
+const addCommandBtn = document.getElementById("addCommandBtn");
+const programListEl = document.getElementById("programList");
 
 const CELL_SIZE = 40;
 const GRID_WIDTH = 10;
 const GRID_HEIGHT = 10;
+
+let program = [];
+let moving = false;
 
 let finch = {
   x: 0,
@@ -17,7 +22,6 @@ let finch = {
 };
 
 let target = randomTarget();
-let moving = false;
 
 /* ---------- Helpers ---------- */
 
@@ -66,7 +70,6 @@ function moveStep(interval) {
 
     statusEl.textContent = "Target reached! New target generated.";
 
-    // generate new target ONLY after success
     target = randomTarget();
     draw();
 
@@ -76,24 +79,42 @@ function moveStep(interval) {
   return false;
 }
 
-function runMovement(steps) {
-  if (moving) return;
+function runProgram() {
+  if (moving || program.length === 0) return;
 
   moving = true;
-  statusEl.textContent = "Moving...";
+  statusEl.textContent = "Running program...";
 
-  let stepsRemaining = steps;
+  // reset finch at start of program
+  finch.x = 0;
+  finch.y = 0;
+  draw();
+
+  let commandIndex = 0;
+  let stepsRemaining = program[0].steps;
+
+  finch.dx = program[0].dx;
+  finch.dy = program[0].dy;
 
   const interval = setInterval(() => {
     if (stepsRemaining <= 0) {
-      clearInterval(interval);
-      moving = false;
-      statusEl.textContent = "Out of steps. Target not reached.";
+      commandIndex += 1;
+
+      if (commandIndex >= program.length) {
+        clearInterval(interval);
+        moving = false;
+        statusEl.textContent = "Program complete.";
+        return;
+      }
+
+      finch.dx = program[commandIndex].dx;
+      finch.dy = program[commandIndex].dy;
+      stepsRemaining = program[commandIndex].steps;
       return;
     }
 
-    const stopped = moveStep(interval);
-    if (stopped) return;
+    const hitTarget = moveStep(interval);
+    if (hitTarget) return;
 
     stepsRemaining -= 1;
   }, 400);
@@ -101,28 +122,49 @@ function runMovement(steps) {
 
 /* ---------- Controls ---------- */
 
+// RUN PROGRAM (sequence only)
 runBtn.addEventListener("click", () => {
-  const steps = parseInt(stepsInput.value, 10);
-  if (isNaN(steps) || steps <= 0) return;
+  if (program.length === 0) return;
   if (moving) return;
 
-  // reset finch only
-  finch.x = 0;
-  finch.y = 0;
-
-  // set direction from student choice
-  const direction = directionSelect.value;
-
-  if (direction === "right") { finch.dx = 1; finch.dy = 0; }
-  if (direction === "left")  { finch.dx = -1; finch.dy = 0; }
-  if (direction === "up")    { finch.dx = 0; finch.dy = -1; }
-  if (direction === "down")  { finch.dx = 0; finch.dy = 1; }
-
-  draw();
-  runMovement(steps);
+  runProgram();
 });
+
+// ADD COMMAND
+addCommandBtn.addEventListener("click", () => {
+  const direction = directionSelect.value;
+  const steps = parseInt(stepsInput.value, 10);
+  if (isNaN(steps) || steps <= 0) return;
+
+  let dx = 0;
+  let dy = 0;
+
+  if (direction === "right") dx = 1;
+  if (direction === "left") dx = -1;
+  if (direction === "up") dy = -1;
+  if (direction === "down") dy = 1;
+
+  program.push({ dx, dy, steps });
+  renderProgram();
+});
+
+/* ---------- Program Display ---------- */
+
+function renderProgram() {
+  programListEl.innerHTML = "";
+
+  program.forEach((cmd, index) => {
+    const li = document.createElement("li");
+    li.textContent = `Step ${index + 1}: move ${cmd.steps} ${
+      cmd.dx === 1 ? "right" :
+      cmd.dx === -1 ? "left" :
+      cmd.dy === 1 ? "down" : "up"
+    }`;
+    programListEl.appendChild(li);
+  });
+}
 
 /* ---------- Init ---------- */
 
 draw();
-statusEl.textContent = "Choose a direction, enter steps, and plan your path.";
+statusEl.textContent = "Build a program, then run it.";
