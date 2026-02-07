@@ -181,34 +181,41 @@
       return;
     }
   
-    let next = {
-      x: position.x + directionVector.x * SPACE_SIZE,
-      y: position.y + directionVector.y * SPACE_SIZE
-    };
+    let nextX = position.x + directionVector.x * SPACE_SIZE;
+    let nextY = position.y + directionVector.y * SPACE_SIZE;
   
     const maxX = cfg.world.width - cfg.finch.size;
     const maxY = cfg.world.height - cfg.finch.size;
   
-    const hitLeft   = next.x < 0;
-    const hitRight  = next.x > maxX;
-    const hitTop    = next.y < 0;
-    const hitBottom = next.y > maxY;
-  
-    if (hitLeft || hitRight || hitTop || hitBottom) {
+    // X wall handling
+    if (nextX < 0 || nextX > maxX) {
       if (wallMode.value === "bounce") {
-        if (hitLeft || hitRight) directionVector.x *= -1;
-        if (hitTop || hitBottom) directionVector.y *= -1;
+        directionVector.x *= -1;
+        nextX = position.x + directionVector.x * SPACE_SIZE;
       } else {
         remainingSpaces = 0;
         return;
       }
-    } else {
-      position = next;
-      draw();
     }
   
-    remainingSpaces--;
+    // Y wall handling
+    if (nextY < 0 || nextY > maxY) {
+      if (wallMode.value === "bounce") {
+        directionVector.y *= -1;
+        nextY = position.y + directionVector.y * SPACE_SIZE;
+      } else {
+        remainingSpaces = 0;
+        return;
+      }
+    }
+  
+    position.x = nextX;
+    position.y = nextY;
+  
+    remainingSpaces--; // ALWAYS consume one space
+    draw();
   }
+
 
 
 
