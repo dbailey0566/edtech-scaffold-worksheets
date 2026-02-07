@@ -1,39 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Virtual Finch Level 3</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Virtual Finch Simulator Level 3</title>
+
+  <!-- IMPORTANT: folder-relative path -->
+  <link rel="stylesheet" href="./style.css" />
 </head>
+
 <body>
 
-<h1>Virtual Finch Level 3</h1>
+  <header class="sim-header">
+    <a href="../../index.html" class="home-link">← Home</a>
 
-<div id="controls">
-  <label>
-    Steps to move:
-    <input type="number" id="stepsInput" min="1" value="5">
-  </label>
-  <label>
-    Direction:
-    <select id="directionSelect">
-      <option value="right">Right</option>
-      <option value="left">Left</option>
-      <option value="up">Up</option>
-      <option value="down">Down</option>
-    </select>
-  </label>
-  <button id="runBtn">Run</button>
-</div>
+    <div class="title-wrap">
+      <h1 id="toolTitle">Virtual Finch Simulator Level 3</h1>
+      <p id="toolDesc">
+        Plan a path using direction and step count. The finish location changes each run.
+      </p>
+    </div>
 
-<div id="world">
-  <div id="finch"></div>
-  <div id="target"></div>
-</div>
+    <span class="level-pill">Level 3</span>
+  </header>
 
-<p id="status"></p>
+  <main>
 
-<script src="script.js"></script>
+    <!-- LEFT PANEL: PLANNING + CONTROLS -->
+    <section>
+      <h2>Plan your movement</h2>
+      <p>
+        The yellow target is randomized every run. Use the grid to count spaces,
+        then choose a direction and step count to try to reach the target.
+      </p>
+
+      <div class="controls">
+        <label for="stepsInput"><strong>Steps to move</strong></label>
+        <input type="number" id="stepsInput" min="1" value="5" />
+
+        <label for="directionSelect" style="margin-top:12px;"><strong>Direction</strong></label>
+        <select id="directionSelect">
+          <option value="right">Right</option>
+          <option value="left">Left</option>
+          <option value="up">Up</option>
+          <option value="down">Down</option>
+        </select>
+
+        <div style="margin-top:14px;">
+          <button id="runBtn" class="primary">Run</button>
+        </div>
+      </div>
+
+      <h3>How to play</h3>
+      <ul>
+        <li>Look at the yellow target location</li>
+        <li>Use grid lines to count spaces</li>
+        <li>Select a direction</li>
+        <li>Enter a step count</li>
+        <li>Click Run and see if your plan works</li>
+      </ul>
+
+      <p id="status" class="status"></p>
+    </section>
+
+    <!-- RIGHT PANEL: VIRTUAL FINCH -->
+    <section>
+      <h2>Virtual Finch space</h2>
+      <p>Watch the Finch move and bounce off walls. It stops when it reaches the target.</p>
+
+      <div class="world-wrapper">
+        <div id="world" class="world" aria-label="Virtual Finch world">
+          <div id="finch" class="finch" aria-label="Virtual Finch"></div>
+          <div id="target" class="target" aria-label="Target"></div>
+        </div>
+      </div>
+
+      <div class="status">
+        <div><strong>Start:</strong> <span>0, 0</span></div>
+        <div><strong>Goal:</strong> <span>Reach the yellow target</span></div>
+      </div>
+    </section>
+
+    <section class="level-complete">
+      <h3>Ready for Level 4?</h3>
+
+      <p>
+        Level 4 adds multi-step programs or rule-based turning.
+        Before moving on, make sure you can plan a route and explain why your plan worked or failed.
+      </p>
+
+      <ul>
+        <li>You can count grid spaces accurately</li>
+        <li>You can predict a bounce off a wall</li>
+        <li>You can adjust direction and steps based on where the target spawns</li>
+      </ul>
+
+      <a class="next-level disabled" href="#">
+        Proceed to Level 4 (coming soon)
+      </a>
+    </section>
+
+  </main>
+
+  <!-- IMPORTANT: folder-relative path -->
+  <script src="./script.js"></script>
+
 </body>
 </html>
-
