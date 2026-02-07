@@ -15,7 +15,7 @@
       <a href="../../index.html" class="home-link">← Home</a>
       <h1 id="toolTitle">Virtual Finch Simulator</h1>
       <p id="toolDesc">
-        Level 2 · Continuous movement using key hold and release
+        Level 2 · Continuous movement with adjustable distance
       </p>
     </div>
 
@@ -34,9 +34,25 @@
     <section class="panel">
       <h2>Build your movement rules</h2>
       <p class="muted">
-        Create rules that define how the Finch moves while a key is held down.
+        Define how the Finch moves while a key is held down, and how far it moves
+        each step.
       </p>
 
+      <!-- NEW: STEP SIZE INPUT -->
+      <div class="builder">
+        <div class="row">
+          <label for="stepInput">Spaces</label>
+          <input
+            type="number"
+            id="stepInput"
+            min="1"
+            max="20"
+            value="5"
+          />
+        </div>
+      </div>
+
+      <!-- RULE BUILDER -->
       <div class="builder">
         <div class="row">
           <label for="eventSelect">When</label>
@@ -76,7 +92,8 @@
     <section class="panel">
       <h2>Virtual Finch space</h2>
       <p class="muted">
-        Click Run, then <strong>hold</strong> arrow keys to move continuously.
+        Click Run, then <strong>hold</strong> arrow keys to move.
+        Adjust the number of spaces to control precision.
       </p>
 
       <div id="world" class="world" aria-label="Virtual Finch world">
@@ -98,9 +115,10 @@
         <h3>How to play</h3>
         <ul>
           <li>Add at least one rule for an arrow key</li>
+          <li>Set how many spaces the Finch moves per step</li>
           <li>Click Run</li>
-          <li><strong>Hold</strong> arrow keys to move the Finch</li>
-          <li>Release keys to stop movement</li>
+          <li><strong>Hold</strong> arrow keys to move continuously</li>
+          <li>Use smaller values for precision</li>
           <li>Reset returns the Finch to the start position</li>
         </ul>
       </div>
