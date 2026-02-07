@@ -1,6 +1,7 @@
 const finchEl = document.getElementById("finch");
 const targetEl = document.getElementById("target");
 const stepsInput = document.getElementById("stepsInput");
+const directionSelect = document.getElementById("directionSelect");
 const runBtn = document.getElementById("runBtn");
 const statusEl = document.getElementById("status");
 
@@ -15,12 +16,17 @@ let finch = {
   dy: 0
 };
 
-let target = {
-  x: 6,
-  y: 0
-};
-
+let target = randomTarget();
 let moving = false;
+
+/* ---------- Helpers ---------- */
+
+function randomTarget() {
+  return {
+    x: Math.floor(Math.random() * GRID_WIDTH),
+    y: Math.floor(Math.random() * GRID_HEIGHT)
+  };
+}
 
 function draw() {
   finchEl.style.left = `${finch.x * CELL_SIZE}px`;
@@ -44,7 +50,9 @@ function reachedTarget() {
   return finch.x === target.x && finch.y === target.y;
 }
 
-function moveStep(interval, stepsRemainingRef) {
+/* ---------- Movement ---------- */
+
+function moveStep(interval) {
   bounceIfNeeded();
 
   finch.x += finch.dx;
@@ -85,12 +93,40 @@ function runMovement(steps) {
   }, 400);
 }
 
+/* ---------- Controls ---------- */
+
 runBtn.addEventListener("click", () => {
   const steps = parseInt(stepsInput.value, 10);
   if (isNaN(steps) || steps <= 0) return;
 
+  // reset finch position
+  finch.x = 0;
+  finch.y = 0;
+
+  // set direction from student choice
+  const direction = directionSelect.value;
+
+  if (direction === "right") {
+    finch.dx = 1; finch.dy = 0;
+  }
+  if (direction === "left") {
+    finch.dx = -1; finch.dy = 0;
+  }
+  if (direction === "up") {
+    finch.dx = 0; finch.dy = -1;
+  }
+  if (direction === "down") {
+    finch.dx = 0; finch.dy = 1;
+  }
+
+  // randomize target each run
+  target = randomTarget();
+
+  draw();
   runMovement(steps);
 });
 
+/* ---------- Init ---------- */
+
 draw();
-statusEl.textContent = "Enter steps and try to reach the target.";
+statusEl.textContent = "Choose a direction, enter steps, and plan your path.";
