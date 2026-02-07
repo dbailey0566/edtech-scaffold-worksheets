@@ -32,7 +32,7 @@
   const runText = document.getElementById("runText");
 
   // ---------- STATE ----------
-  const SPACE_SIZE = 20; // pixels per space
+  const SPACE_SIZE = 6; // pixels per space
   let isRunning = false;
   let rules = [];
   let position = { x: 0, y: 0 };
