@@ -47,6 +47,7 @@
   function setRunState(running) {
     isRunning = running;
     runText.textContent = running ? "Running" : "Stopped";
+    stepInput.disabled = running;
     setStatus(running ? "Hold arrow keys to move." : "Stopped.");
   }
 
@@ -178,6 +179,7 @@
     const ev = cfg.events.find(evt => evt.key === e.key);
     if (!ev) return;
 
+    e.preventDefault();
     activeDirections.add(ev.id);
 
     if (!moveInterval) {
