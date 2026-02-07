@@ -207,3 +207,13 @@ ul {
   color: #6b7280;
   cursor: not-allowed;
 }
+/* ---------- Level 3 additions ---------- */
+
+.target {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: gold;
+  border: 2px solid #333;
+  box-sizing: border-box;
+}
