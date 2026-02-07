@@ -55,12 +55,29 @@
   function clampPosition(next) {
     const maxX = cfg.world.width - cfg.finch.size;
     const maxY = cfg.world.height - cfg.finch.size;
-
+  
     return {
       x: Math.max(0, Math.min(maxX, next.x)),
       y: Math.max(0, Math.min(maxY, next.y))
     };
   }
+
+  function addClickFeedback(btn) {
+    btn.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        btn.classList.add("is-pressed");
+      }
+    });
+  
+    btn.addEventListener("keyup", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        btn.classList.remove("is-pressed");
+      }
+    });
+  }
+
+
+  
 
   function draw() {
     finchEl.style.transform = `translate(${position.x}px, ${position.y}px)`;
@@ -261,6 +278,7 @@
     printBtn.addEventListener("click", () => window.print());
     exportBtn.addEventListener("click", exportRules);
     importBtn.addEventListener("click", importRules);
+    [runBtn, stopBtn, resetBtn, printBtn].forEach(addClickFeedback);
 
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
