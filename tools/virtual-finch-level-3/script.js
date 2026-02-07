@@ -61,14 +61,18 @@ function moveStep(interval) {
   draw();
 
   if (reachedTarget()) {
-    clearInterval(interval);
-    moving = false;
-    statusEl.textContent = "Target reached. Movement stopped.";
-    return true;
-  }
+  clearInterval(interval);
+  moving = false;
 
-  return false;
+  statusEl.textContent = "Target reached! New target generated.";
+
+  // generate new target AFTER success
+  target = randomTarget();
+  draw();
+
+  return true;
 }
+
 
 function runMovement(steps) {
   if (moving) return;
@@ -120,13 +124,10 @@ runBtn.addEventListener("click", () => {
   }
 
   // randomize target each run
-  target = randomTarget();
-
-  draw();
   runMovement(steps);
 });
 
-/* ---------- Init ---------- */
+
 
 draw();
 statusEl.textContent = "Choose a direction, enter steps, and plan your path.";
